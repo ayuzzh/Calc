@@ -14,7 +14,7 @@ import os
 
 os.popen("start_new_session=True")
 
-from files import calculations, newfile
+from files import calculations
 
 
 Builder.load_file("main.kv")
