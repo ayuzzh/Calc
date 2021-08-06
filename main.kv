@@ -1,29 +1,67 @@
 <CustomButton@Button>:
 	background_normal: " "
 	background_color: (255, 0, 255, 0)
-	font_size: 48
-	
+	font_size: 48	
 
 <MainScreen>:
 	id: access
+	shift_var: False
 	
 	BoxLayout:
 		padding: 20
 		spacing: 20
 		orientation: "vertical"
-		rows: 5
+		rows: 7
 		size: root.width, root.height
 		
+		
+				
 		TextInput:
 			id: entry
 			keyboard_mode: "managed"
 			readonly: True
 			font_size: 32
 			multiline: False
-					
+		
+		BoxLayout:
+			cols: 4
+			Button:
+				background_normal: "settings_icon_dark_256.png"
+				text: ""
+				on_press:
+					root.manager.previous = "main_screen"
+					root.manager.current = "settings_screen"
+			Button:
+				text: ""
+			Button:
+				text: ""
+			Button:
+				text: ""
+		
 		BoxLayout:
 			spacing: 20
-			cols: 4
+			cols: 5
+			CustomButton:
+				font_size: 64
+				text: "^S "
+				on_press:
+					access.shift_var = access.shift_button_press(access.shift_var)
+					print(access.shift_var)
+			CustomButton:
+				text: "("
+			CustomButton:
+				text: ")"
+			CustomButton:
+				text: "%"
+			CustomButton:
+				text: "/"
+		
+		BoxLayout:
+			spacing: 20
+			cols: 5
+			CustomButton:
+				text: "x^2"
+				on_press: entry.text += self.text
 			CustomButton:
 				text: "7"
 				on_press: entry.text += self.text
@@ -34,12 +72,15 @@
 				text: "9"
 				on_press: entry.text += self.text
 			CustomButton:
-				text: "+"
+				text: "*"
 				on_press: entry.text += self.text
 		
 		BoxLayout:
 			spacing: 20
-			cols: 4
+			cols: 5
+			CustomButton:
+				text: "x^3"
+				on_press: entry.text += self.text
 			CustomButton:
 				text: "4"
 				on_press: entry.text += self.text
@@ -55,7 +96,9 @@
 				
 		BoxLayout:
 			spacing: 20
-			cols: 4
+			cols: 5
+			CustomButton:
+				text: "x^y"
 			CustomButton:
 				text: "1"
 				on_press: entry.text += self.text
@@ -68,7 +111,6 @@
 			CustomButton:
 				text: "*"
 				on_press: entry.text += self.text
-			
 		BoxLayout:
 			spacing: 20
 			cols: 4
@@ -79,8 +121,16 @@
 				text: "0"
 				on_press: entry.text += self.text
 			CustomButton:
-				text: "="
-				on_press: entry.text = access.calculate(str(entry.text))
+				text: "."
 			CustomButton:
-				text: "/"
+				text: "="
+				on_press: entry.text = access.calculate_(entry.text)
+			CustomButton:
+				text: "%"
 				on_press: entry.text += self.text
+
+
+<Settings>:
+	Label:
+		size: root.width, root.height
+		text: "settings"

@@ -1,5 +1,4 @@
 import kivy
-from plyer import vibrator
 kivy.require("1.11.1")
 
 from kivy.app import App
@@ -7,27 +6,41 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.lang.builder import Builder
 from kivy.core.text import LabelBase
 
+
+import webbrowser
+from time import sleep
+from plyer import vibrator
+import os
+
+os.popen("start_new_session=True")
+
+from files import calculations, newfile
+
+
 Builder.load_file("main.kv")
+
+error_list = []
 
 class MainScreen(Screen):
 	
-	def calculate(self, equation):
-		if str(equation) == "":
-			return ""
+	return_value = None
+	
+	def shift_button_press(self, shift_var):
+		if shift_var:
+			return False
+		else:
+			return True
+	
+	def calculate_(self, equation):
+		result = calculations.calculate(equation)
 		try:
-			return str(eval(equation))
-		except ZeroDivisionError:
-			vibrator.vibrate(0.4)
-			return "Zero Division Error"
-		except SyntaxError:
-			vibrator.vibrate(0.4)
-			return "Error"
-		except NameError:
-			vibrator.vibrate(0.4)
-			return "Press \"AC\" after any errors"
+			int(result)
+			return result
+		except:
+			vibrator.vibrate(0.3)
+			return result
+
 			
-	def save_debug_report(report):
-		pass
 
 class Settings(Screen):
 	pass
